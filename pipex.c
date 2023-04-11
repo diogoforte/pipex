@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:19:39 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/07 01:20:07 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/11 17:42:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,22 @@ void pipex(char **argv, char **envp)
 	int pipefd[2];
 	
 	fd = fileOpener(argv[1]);
+	if (pipe(pipefd) == -1)
+		return perror("ERROR WITH PIPES");
 	pid = fork();
-	//pipe(pipefd);
+	if (pid < 0)
+		return perror("ERROR WITH Fork");
 	if (pid == 0)
-	{
-		//dup2(fd[1], STDOUT_FILENO);
-		execve(pathfinder(envp, argv[2]), ft_split(argv[2], ' '), envp);
-	}
+		firstCommand(envp, argv, pipefd);
 	
 }
 
-/* void firstCommand()
+void firstCommand(char **envp, char **argv, int *pipefd)
 {
-	dup2(fd[1], STDOUT_FILENO);
-	execve()
+	dup2(pipefd[0], STDIN_FILENO);
+	//dup2(fd[1], STDOUT_FILENO);
+	execve(pathfinder(envp, argv[2]), ft_split(argv[2], ' '), envp);
+
 }
 
-void secondCommand() */
+//void secondCommand()

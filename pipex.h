@@ -32,6 +32,8 @@ typedef struct s_envs
 char			*pathfinder(char **envp, char *command);
 void			pipex(char **argv, char **envp);
 char			*triple_strjoin(char *s1, char* s2, char *s3);
+void			firstCommand(char **envp, char **argv, int *pipefd);
+
 
 int				ft_strncmp(const char *str1, const char *str2, size_t n);
 static int		wdc(char const *s, char c);
