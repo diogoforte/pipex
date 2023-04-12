@@ -30,9 +30,10 @@ typedef struct s_envs
 }					t_envs;
 
 char			*pathfinder(char **envp, char *command);
-void			pipex(char **argv, char **envp);
+void			pipex(char **av, char **envp);
 char			*triple_strjoin(char *s1, char* s2, char *s3);
-void			firstCommand(char **envp, char **argv, int *pipefd);
+void			firstCommand(char **envp, char **av, int *pipefd);
+void			secondCommand(char **envp, char **av, int *pipefd);
 
 
 int				ft_strncmp(const char *str1, const char *str2, size_t n);

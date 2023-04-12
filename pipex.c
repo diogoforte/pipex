@@ -6,54 +6,68 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:19:39 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/11 17:42:17 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:40:35 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-int main(int argc, char **argv, char** envp)
+int main(int ac, char **av, char** envp)
 {
-	if (argc == 5)
-		pipex(argv, envp);
+	if (ac == 5)
+		pipex(av, envp);
 	else
 		perror("Invalid number of parametres");
 	return (0);
 }
 
-int fileOpener(char *argv)
+void pipex(char **av, char **envp)
 {
-	int fd;
-	
-	fd = open(argv, O_RDONLY);
-	if (fd < 0)
-		return (1);
-	return (fd);
-}
-
-void pipex(char **argv, char **envp)
-{
-	int fd;
 	int pid;
 	int pipefd[2];
-	
-	fd = fileOpener(argv[1]);
-	if (pipe(pipefd) == -1)
-		return perror("ERROR WITH PIPES");
+
+	if (pipe(pipefd))
+		perror("Error initializing the pipe");
 	pid = fork();
 	if (pid < 0)
-		return perror("ERROR WITH Fork");
-	if (pid == 0)
-		firstCommand(envp, argv, pipefd);
-	
+		perror("Error initializing the fork");
+	if (!pid)
+		firstCommand(envp, av, pipefd);
+	wait(0);
+	pid = fork();
+	if (pid < 0)
+		perror("Error initializing the fork");
+	if (!pid)
+		secondCommand(envp, av, pipefd);
+	close(pipefd[1]);
+	close(pipefd[0]);
+	wait(0);
 }
 
-void firstCommand(char **envp, char **argv, int *pipefd)
+void firstCommand(char **envp, char **av, int *pipefd)
 {
-	dup2(pipefd[0], STDIN_FILENO);
-	//dup2(fd[1], STDOUT_FILENO);
-	execve(pathfinder(envp, argv[2]), ft_split(argv[2], ' '), envp);
-
+	int infile;
+	
+	close(pipefd[0]);
+	infile = open(av[1], O_RDONLY, 0644);
+	if (infile < 0)
+		perror("Error reading infile");
+	dup2(infile, STDIN_FILENO);
+	dup2(pipefd[1], STDOUT_FILENO);
+	char **avsplit = ft_split(av[2], ' ');
+	execve(pathfinder(envp, avsplit[0]), avsplit, envp);
 }
 
-//void secondCommand()
+void secondCommand(char **envp, char **av, int *pipefd)
+{
+	int	outfile;
+
+	close(pipefd[1]);
+	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (outfile < 0)
+		perror("Error reading infile");
+	dup2(outfile, STDOUT_FILENO);
+	dup2(pipefd[0], STDIN_FILENO);
+	char **avsplit = ft_split(av[3], ' ');
+	execve(pathfinder(envp, avsplit[0]), avsplit, envp);
+}
