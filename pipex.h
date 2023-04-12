@@ -37,8 +37,8 @@ void			secondCommand(char **envp, char **av, int *pipefd);
 
 
 int				ft_strncmp(const char *str1, const char *str2, size_t n);
-static int		wdc(char const *s, char c);
-static size_t	word_size(const char *str, int n, char c);
+int		wdc(char const *s, char c);
+size_t	word_size(const char *str, int n, char c);
 char			**ft_split(const char *str, char c);
 size_t			ft_strlen(char const *str);
 char			*ft_substr(char const *s, unsigned int start, size_t len);

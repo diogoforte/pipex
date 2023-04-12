@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:34:22 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/06 14:36:58 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/12 10:49:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	ft_strncmp(const char *str1, const char *str2, size_t n)
 	return (0);
 }
 
-static int	wdc(char const *s, char c)
+int	wdc(char const *s, char c)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ static int	wdc(char const *s, char c)
 	return (i);
 }
 
-static size_t	word_size(const char *str, int n, char c)
+size_t	word_size(const char *str, int n, char c)
 {
 	size_t	i;
 
