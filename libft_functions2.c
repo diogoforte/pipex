@@ -6,26 +6,26 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 14:37:19 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/07 00:40:39 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:25:17 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char *triple_strjoin(char *s1, char* s2, char *s3)
+char	*triple_strjoin(char *s1, char *s2, char *s3)
 {
-	char *res;
-	int i;
+	char	*res;
+	int		i;
 
 	i = 0;
 	if (!s1 || !s2 || !s3)
-		return(NULL);
+		return (NULL);
 	res = malloc(ft_strlen(s1) + ft_strlen(s2) + ft_strlen(s3) + 1);
 	while (*s1)
 		res[i++] = *s1++;
- 	while(*s2)
+	while (*s2)
 		res[i++] = *s2++;
-	while(*s3)
+	while (*s3)
 		res[i++] = *s3++;
 	return (res);
 }
