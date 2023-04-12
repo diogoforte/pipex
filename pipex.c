@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:19:39 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/12 14:23:04 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/12 14:27:39 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,13 @@ void	pipex(char **av, char **envp)
 	if (pid < 0)
 		perror("Error initializing the fork");
 	if (!pid)
-		firstCommand(envp, av, pipefd);
+		firstcommand(envp, av, pipefd);
 	wait(0);
 	pid = fork();
 	if (pid < 0)
 		perror("Error initializing the fork");
 	if (!pid)
-		secondCommand(envp, av, pipefd);
+		secondcommand(envp, av, pipefd);
 	close(pipefd[1]);
 	close(pipefd[0]);
 	wait(0);
