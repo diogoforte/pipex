@@ -27,6 +27,7 @@ char	*triple_strjoin(char *s1, char *s2, char *s3)
 		res[i++] = *s2++;
 	while (*s3)
 		res[i++] = *s3++;
+	res[i] = 0;
 	return (res);
 }
 

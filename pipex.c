@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/05 15:19:39 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/12 14:27:39 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/13 18:32:32 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,10 @@ void	firstcommand(char **envp, char **av, int *pipefd)
 {
 	int		infile;
 	char	**avsplit;
+	char	*str;
 
 	close(pipefd[0]);
-	infile = open(av[1], O_RDONLY, 0644);
+	infile = open(av[1], O_RDONLY);
 	if (infile < 0)
 	{
 		perror("Error reading infile");
@@ -62,16 +63,22 @@ void	firstcommand(char **envp, char **av, int *pipefd)
 	dup2(infile, STDIN_FILENO);
 	dup2(pipefd[1], STDOUT_FILENO);
 	avsplit = ft_split(av[2], ' ');
-	execve(pathfinder(envp, avsplit[0]), avsplit, envp);
+	str = pathfinder(envp, avsplit[0]);
+
+	execve(str, avsplit, envp);
+	free_list(avsplit);
+	free(str);
+	exit(4);
 }
 
 void	secondcommand(char **envp, char **av, int *pipefd)
 {
 	int		outfile;
 	char	**avsplit;
+	char	*str;
 
 	close(pipefd[1]);
-	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	outfile = open(av[4], O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (outfile < 0)
 	{
 		perror("Error initializing outfile");
@@ -80,5 +87,9 @@ void	secondcommand(char **envp, char **av, int *pipefd)
 	dup2(outfile, STDOUT_FILENO);
 	dup2(pipefd[0], STDIN_FILENO);
 	avsplit = ft_split(av[3], ' ');
-	execve(pathfinder(envp, avsplit[0]), avsplit, envp);
+	str = pathfinder(envp, avsplit[0]);
+	execve(str, avsplit, envp);
+	free_list(avsplit);
+	free(str);
+	exit(4);
 }

@@ -18,6 +18,8 @@ char	*pathfinder(char **envp, char *command)
 	char	**paths;
 	char	*str;
 
+	if (!command || !access(command, F_OK))
+		return (command);
 	i = 0;
 	while (ft_strncmp(envp[i], "PATH", 4))
 		i++;
@@ -29,9 +31,23 @@ char	*pathfinder(char **envp, char *command)
 		if (!access(str, F_OK))
 			break ;
 		free(str);
+		str = NULL;
 	}
-	free(paths);
-	if (access(str, F_OK))
+	if (!str)
 		perror("No path found");
+	free_list(paths);
 	return (str);
+}
+
+void	free_list(char **list)
+{
+	int	i;
+
+	if (list)
+	{
+		i = 0;
+		while (list[i])
+			free(list[i++]);
+		free(list);
+	}
 }

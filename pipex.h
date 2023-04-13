@@ -20,6 +20,7 @@
 # include <fcntl.h>
 # include <stdio.h>
 
+void            free_list(char **list);
 char			*pathfinder(char **envp, char *command);
 void			pipex(char **av, char **envp);
 char			*triple_strjoin(char *s1, char *s2, char *s3);
