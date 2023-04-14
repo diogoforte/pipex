@@ -6,7 +6,7 @@
 /*   By: dinunes- <dinunes-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 14:19:56 by dinunes-          #+#    #+#             */
-/*   Updated: 2023/04/12 14:22:28 by dinunes-         ###   ########.fr       */
+/*   Updated: 2023/04/14 19:15:48 by dinunes-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # include <fcntl.h>
 # include <stdio.h>
 
-void            free_list(char **list);
+void			errorhandling(int error);
+void			free_list(char **list);
 char			*pathfinder(char **envp, char *command);
 void			pipex(char **av, char **envp);
 char			*triple_strjoin(char *s1, char *s2, char *s3);

@@ -15,7 +15,7 @@ HEADER = pipex.h
 
 SRC =  	libft_functions.c \
 		libft_functions2.c \
-		path.c \
+		pipex_utils.c \
 		pipex.c \
 
 CC = cc
